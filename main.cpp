@@ -33,8 +33,9 @@ int getInput() {
 }
 
 void printList(Node* head) {
+	cout << "List: ";
 	while (head != NULL) {
-		cout << head->data << "\n";
+		cout << head->data << ' ';
 		head = head->nextNode;
 	}
 	cout << "\n";
@@ -137,9 +138,22 @@ enum Options {
 	Quit, PrintList, AddToFront, AddToBack, AddAfter, DelFirst, DelLast, DelAll, LengthOfList,
 };
 
-void menu(int choice, Node* &head) {
-	int num = 0;
-	int el = 0;
+bool menu(Node* &head) {
+	int num = 0, el = 0, choice = 0;
+
+	cout << "\tMENU" << "\n"
+		<< "1: Print list" << "\n"
+		<< "2: Add first element" << "\n"
+		<< "3: Add last element" << "\n"
+		<< "4: Add after element" << "\n"
+		<< "5: Delete first element" << "\n"
+		<< "6: Delete last element" << "\n"
+		<< "7: Delete all elements" << "\n"
+		<< "8: Length of list" << "\n"
+		<< "0: Quit" << "\n\n";
+
+	cout << "Write your choice: ";
+	choice = getInput();
 
 	switch (choice)
 	{
@@ -185,49 +199,24 @@ void menu(int choice, Node* &head) {
 
 	case Quit:
 		cout << "Quiting...";
+		return false;
 		break;
 
 	default:
 		cout << "Wrong option" << "\n";
 		break;
 	}
+
+	return true;
 }
 
 int main() {
-	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-
 	Node* head = NULL;
 
-	cout << "\tMENU" << "\n"
-		<< "1: Print list" << "\n"
-		<< "2: Add first element" << "\n"
-		<< "3: Add last element" << "\n"
-		<< "4: Add after element" << "\n"
-		<< "5: Delete first element" << "\n"
-		<< "6: Delete last element" << "\n"
-		<< "7: Delete all elements" << "\n"
-		<< "8: Length of list" << "\n"
-		<< "0: Quit" << "\n\n";
-	
-	int choice = getInput();
-	menu(choice, head);
+	int working = menu(head);
 
-	while (choice) {
-		cout << "\n\n";
-		cout << "\tMENU" << "\n"
-			<< "1: Print list" << "\n"
-			<< "2: Add first element" << "\n"
-			<< "3: Add last element" << "\n"
-			<< "4: Add after element" << "\n"
-			<< "5: Delete first element" << "\n"
-			<< "6: Delete last element" << "\n"
-			<< "7: Delete all elements" << "\n"
-			<< "8: Length of list" << "\n"
-			<< "0: Quit" << "\n\n";
-
-		choice = getInput();
-		menu(choice, head);
-	}
+	while (working)
+		working = menu(head);
 
 	return 0;
 }
